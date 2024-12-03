@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-
+# 抽象クラス
 class Vehicle(metaclass=ABCMeta):
     def __init__(self, name: str, color: str):
         self.name = name
@@ -19,6 +19,8 @@ class Vehicle(metaclass=ABCMeta):
         pass
 
 
+# 具象クラス
+# Airplane extends Vehicle
 class Airplane(Vehicle):
     def __init__(self, name: str, color: str):
         super().__init__(name, color)
@@ -33,6 +35,8 @@ class Airplane(Vehicle):
         print("fly!")
 
 
+# 具象クラス
+# Car extends Vehicle
 class Car(Vehicle):
     def __init__(self, name: str, color: str):
         super().__init__(name, color)

@@ -1,6 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
-
+# インターフェース
 class Target(metaclass=ABCMeta):
     @abstractmethod
     def get_csv_data(self) -> str:
@@ -20,10 +20,16 @@ class NewLibrary:
             },
         ]
 
-
+# 具象クラス
+# JsonToCsvAdapter implements Target
+# 委譲を使用したアダプターパターン (Delegation)
+# NewLibraryのインスタンスをプライベート変数に格納している
 class JsonToCsvAdapter(Target):
     def __init__(self, adaptee: NewLibrary):
-        self.__adaptee = adaptee
+        # JsonToCsvAdapterのインスタンス化時に引数として受け取るNewLibraryのインスタンスをプライベート変数に格納している
+        # これにより、JsonToCsvAdapterのインスタンスがNewLibraryのインスタンスを使用することができる
+        # JsonToCsvAdapterはインスタンス化時にNewLibraryのインスタンスを引数として注入する必要がある
+        self.__adaptee = adaptee # プライベート変数
 
     def get_csv_data(self) -> str:
         json_data = self.__adaptee.get_json_data()
@@ -33,14 +39,16 @@ class JsonToCsvAdapter(Target):
 
         return header + body
 
-
+# Client
 if __name__ == "__main__":
+    # NewLibraryのインスタンスを生成する
     adaptee = NewLibrary()
     print("=== Adapteeが提供するデータ ===")
     print(adaptee.get_json_data())
 
     print("")
 
+    # JsonToCsvAdapterのインスタンス化時にNewLibraryのインスタンス(adaptee)を引数として注入する
     adapter = JsonToCsvAdapter(adaptee)
     print("=== Adapterに変換されたデータ ===")
     print(adapter.get_csv_data())

@@ -1,9 +1,14 @@
+# Dependency Inversion Principle
+# 抽象クラスまたはインターフェースを引数に取る(依存性注入)している
+
 class User:
     pass
 
-
+# Dependency
+# UserController uses UserService temporarily
 class UserController:
     def __init__(self):
+        # プライベート変数
         self.__user_service = UserService()
 
     def create(self, user: User) -> User:
@@ -13,8 +18,11 @@ class UserController:
         return self.__user_service.find_by_id(id)
 
 
+# Dependency
+# UserService uses UserRdbRepository temporarily
 class UserService:
     def __init__(self):
+        # プライベート変数
         self.__user_repository = UserRdbRepository()
 
     def create(self, user: User) -> User:
@@ -24,6 +32,9 @@ class UserService:
         return self.__user_repository.find_by_id(id)
 
 
+
+# Dependency
+# UserRdbRepository is a concrete class (具象クラス)
 class UserRdbRepository:
     def create(self, user: User) -> User:
         print("RDBにUserを登録")
